@@ -85,4 +85,14 @@ resource "aws_instance" "web" {
     Name = "ec2-mariana-tf"
   }
 }
+# https://www.terraform.io/docs/language/values/outputs.html
+output "instance_public_dns" {
+  value = [
+    aws_instance.web.public_dns, 
+    aws_instance.web.public_ip, 
+    aws_instance.web.private_ip,
+    "ssh -i /Users/marianapereira/Documents/CursoAWS/id_rsa ubuntu@${aws_instance.web.public_ip}"
+  ]
+  description = "Mostra o DNS e os IPs publicos e privados da maquina criada."
+}
 # /////
