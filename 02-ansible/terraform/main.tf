@@ -5,7 +5,7 @@ provider "aws" {
 resource "aws_instance" "web" {
   ami           = "ami-09e67e426f25ce0d7"
   instance_type = "t2.micro"
-  key_name      = "treinamento-turma1_itau"
+  key_name      = "id_rsa"
   tags = {
     Name = "Maquina para teste ansible"
   }
@@ -15,6 +15,7 @@ resource "aws_instance" "web" {
 output dns {
   value = aws_instance.web.public_dns
 }
+
 
 
 

@@ -17,10 +17,10 @@ variable "ami" {
 variable "instance" {
   type        = string
   description = "Informe o tamanho a instancia."
-  validation {
-    condition     = substr(var.instance, 0, 3) == "t2."
-    error_message = "O tamanho da instancia não é válido, tem que começar com \"t2.\"."
-  }
+  # validation {
+  #   condition     = substr(var.instance, 0, 3) == "t2."
+  #   error_message = "O tamanho da instancia não é válido, tem que começar com \"t2.\"."
+  # }
 }
 variable "securityGroup" {
   type        = string

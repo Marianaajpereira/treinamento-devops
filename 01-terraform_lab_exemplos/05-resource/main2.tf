@@ -5,6 +5,7 @@ resource "aws_instance" "web" {
   subnet_id = var.subnet
   ami= var.ami
   instance_type = var.instance
+  key_name = "kp-treinamento-itau-turma2-mariana"
   vpc_security_group_ids = [var.securityGroup]
   associate_public_ip_address = true
   root_block_device {
@@ -12,8 +13,15 @@ resource "aws_instance" "web" {
     volume_size = 30
   }
   tags = {
-    Name = "ec2-mariana-tf-variaveis"
+    Name = "ec2-mariana-java"
   }
+}
+
+output "instance_public_dns" {
+  value = [
+    aws_instance.web.public_dns
+  ]
+  description = "Mostra o DNS e os IPs publicos e privados da maquina criada."
 }
 
 /* 
