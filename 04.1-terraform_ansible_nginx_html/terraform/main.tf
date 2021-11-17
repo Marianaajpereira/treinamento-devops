@@ -1,10 +1,10 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "sa-east-1"
 }
 
-data "http" "myip" {
-  url = "http://ipv4.icanhazip.com" # outra opção "https://ifconfig.me"
-}
+# data "http" "myip" {
+#   url = "http://ipv4.icanhazip.com" # outra opção "https://ifconfig.me"
+# }
 
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -18,17 +18,24 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "maquina_nginx_html" {
   ami           = "${data.aws_ami.ubuntu.id}"
+  subnet_id = "subnet-02a9fe6e7889f4903"
   instance_type = "t2.micro"
-  key_name      = "treinamento-turma1_itau"
+  key_name      = "kp-treinamento-itau-turma2-mariana"
+  associate_public_ip_address = true
+  root_block_device {
+    encrypted = true
+    volume_size = 30
+  }
   tags = {
-    Name = "maquina_ansible_com_nginx"
+    Name = "maquina_ansible_com_nginx-mariana"
   }
   vpc_security_group_ids = ["${aws_security_group.acessos_html.id}"]
 }
 
 resource "aws_security_group" "acessos_html" {
-  name        = "acessos_html"
+  name        = "acessos_html-mariana"
   description = "acessos inbound traffic"
+  vpc_id = "vpc-0b43a8b3bafbe5fe1"
 
   ingress = [
     {
@@ -36,7 +43,7 @@ resource "aws_security_group" "acessos_html" {
       from_port        = 22
       to_port          = 22
       protocol         = "tcp"
-      cidr_blocks      = ["${chomp(data.http.myip.body)}/32"]
+      cidr_blocks      = ["0.0.0.0/0"]
       ipv6_cidr_blocks = ["::/0"]
       prefix_list_ids = null,
       security_groups: null,
@@ -89,7 +96,7 @@ resource "aws_security_group" "acessos_html" {
 output "aws_instance_e_ssh" {
   value = [
     aws_instance.maquina_nginx_html.public_ip,
-    "ssh -i ~/Desktop/devops/treinamentoItau ubuntu@${aws_instance.maquina_nginx_html.public_dns}"
+    "ssh -i /home/ubuntu/id_rsa ubuntu@${aws_instance.maquina_nginx_html.public_dns}"
   ]
 }
 

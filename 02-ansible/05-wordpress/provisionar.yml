@@ -9,15 +9,22 @@
     # - name: "Criando um arquivo a toa no servidor"
     #   shell: "echo 'escrevendo algo no servidor' >> teste.txt"
 
+    - name: "Roda: sudo apt update"
+      become: yes
+      apt:
+        upgrade: yes # comando que quero fazer
+        update_cache: yes
+        cache_valid_time: 86400 #Um dia
+
     - name: "Instala pacotes"
       apt:
         name: "{{ item }}"
         state: latest
       become: yes # roda com sudo
       with_items:
-        - php7.2
+        - php7.4
         - apache2
-        - libapache2-mod-php7.2
+        - libapache2-mod-php7.4
         - php-mysql
         - php-curl
         - mysql-server
@@ -84,15 +91,20 @@
     #     login_password: root
     #     state: present
 
-    - name: "Copiando novo tema WP"
-      copy:
-        src: "thema/generatepress.3.0.3.zip"
-        dest: "/tmp/generatepress.3.0.3.zip"
-      become: yes
+    # - name: "Copiando novo tema WP"
+    #   copy:
+    #     src: "thema/generatepress.3.0.3.zip"
+    #     dest: "/tmp/generatepress.3.0.3.zip"
+    #   become: yes
 
-    - name: "Descompactar na pasta do thema"
-      unarchive:
-        src: "/tmp/generatepress.3.0.3.zip"
-        dest: "/var/www/wordpress/wp-content/themes/"
-        remote_src: yes
-      become: yes
+    # - name: "Descompactar na pasta do thema"
+    #   unarchive:
+    #     src: "/tmp/generatepress.3.0.3.zip"
+    #     dest: "/var/www/wordpress/wp-content/themes/"
+    #     remote_src: yes
+    #   become: yes
+
+    - shell: cat /var/www/wordpress/wp-config.php
+      register: ps
+    - debug:
+        msg: " '{{ ps.stdout_lines }}' "
