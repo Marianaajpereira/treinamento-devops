@@ -1,8 +1,9 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "sa-east-1"
 }
 
-module "criar_instancia" {
-  source = "./instancia"
-  nome = "Um nome"
+module "criar-instancia-mariana" {
+  source = "./Mariana"
+  nome = "instancia-mariana"
 }
+

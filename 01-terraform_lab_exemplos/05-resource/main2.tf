@@ -13,9 +13,25 @@ resource "aws_instance" "web" {
     volume_size = 30
   }
   tags = {
-    Name = "ec2-mariana-java"
+    Name = "ec2-mariana-ansible"
   }
 }
+
+# resource "aws_instance" "web" {
+#   subnet_id = "subnet-0c400441905918ceb"
+#   ami= "ami-035bebdd93770d11c"
+#   instance_type = "t2.micro" 
+#   key_name = "kp-treinamento-itau-turma2-mariana"
+#   vpc_security_group_ids = ["sg-0bff3eec927fca337"]
+#   associate_public_ip_address = true
+#   root_block_device {
+#     encrypted = true
+#     volume_size = 30
+#   }
+#   tags = {
+#     Name = "ec2-mariana-ansible"
+#   }
+# }
 
 output "instance_public_dns" {
   value = [
