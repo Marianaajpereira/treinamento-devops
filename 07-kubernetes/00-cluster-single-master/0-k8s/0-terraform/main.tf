@@ -60,6 +60,17 @@ resource "aws_security_group" "acessos_master_single_master-mariana" {
       self: null
     },
     {
+      description      = "Liberando acesso dos pods"
+      from_port        = 30001
+      to_port          = 30001
+      protocol         = "tcp"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = ["::/0"]
+      prefix_list_ids = null,
+      security_groups: null,
+      self: null
+    },
+    {
       cidr_blocks      = []
       description      = ""
       from_port        = 0
