@@ -1,17 +1,19 @@
 provider "aws" {
-  region = "us-east-1"
-}
-
-data "http" "myip" {
-  url = "http://ipv4.icanhazip.com" # outra opção "https://ifconfig.me"
+  region = "sa-east-1"
 }
 
 resource "aws_instance" "dev_img_deploy_jenkins" {
-  ami           = "ami-09e67e426f25ce0d7"
-  instance_type = "t2.micro"
-  key_name      = "chave-jenkins"
+  subnet_id = "subnet-0c400441905918ceb"
+  ami= "ami-035bebdd93770d11c"
+  instance_type = "t2.medium" 
+  key_name = "kp-treinamento-itau-turma2-mariana"
+  associate_public_ip_address = true
+  root_block_device {
+    encrypted = true
+    volume_size = 30
+  }
   tags = {
-    Name = "dev_img_deploy_jenkins"
+    Name = "dev_img_deploy_jenkins-mariana"
   }
   vpc_security_group_ids = [aws_security_group.acesso_jenkins_dev_img.id]
 }
@@ -19,6 +21,7 @@ resource "aws_instance" "dev_img_deploy_jenkins" {
 resource "aws_security_group" "acesso_jenkins_dev_img" {
   name        = "acesso_jenkins_dev_img"
   description = "acesso_jenkins_dev_img inbound traffic"
+  vpc_id      = "vpc-0b43a8b3bafbe5fe1"
 
   ingress = [
     {
@@ -60,7 +63,7 @@ resource "aws_security_group" "acesso_jenkins_dev_img" {
   ]
 
   tags = {
-    Name = "jenkins-dev-img-lab"
+    Name = "jenkins-dev-img-lab-mariana"
   }
 }
 
