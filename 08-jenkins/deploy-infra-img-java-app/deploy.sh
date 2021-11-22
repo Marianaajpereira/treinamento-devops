@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd 08-jenkins/deploy-infra-img-java-app/terraform
+cd /var/lib/jenkins/workspace/TestePipelineMariana/08-jenkins/deploy-infra-img-java-app/terraform
 terraform init
 terraform apply -auto-approve
 
