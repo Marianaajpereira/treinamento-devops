@@ -17,3 +17,11 @@
       with_items:
         - default-jdk
         - nginx
+
+    - name: "Copia Chave privada ssh"
+      copy:
+        src: "/home/ubuntu/id_rsa"
+        dest: "/var/lib/jenkins/.ssh/id_rsa"
+        owner: jenkins
+        group: jenkins
+        mode: '0400'

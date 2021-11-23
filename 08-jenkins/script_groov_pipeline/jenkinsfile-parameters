@@ -3,7 +3,6 @@ pipeline {
 
     parameters {
         string(name: 'VERSION', defaultValue: '', description: 'Um parametro para deploy')
-        choice(name: 'VERSION', choices: ['1.1.1', '1.1.2'])
     }
 
     stages {
